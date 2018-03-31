@@ -39,11 +39,11 @@ public class ModelDefinitionTree {
         return currentDatabase;
     }
 
-    public String getModelsType (String object) {
+    public String getModelsType(String object) {
         String key = new String();
         key = ".{.Models.{." + object + ".{.type";
         String type = modelTree.get(key);
-        return type;        
+        return type;
     }
 
     public String getDatabaseType(String object) {
@@ -78,6 +78,15 @@ public class ModelDefinitionTree {
         return column;
     }
 
+    public boolean getItemRequired(String object, String item) {
+        String key = new String();
+        key = ".{.Models.{." + object + ".{.items.{.properties.{." + item + ".{.required";
+        String itemBool = modelTree.get(key);
+        if (itemBool == null)
+            return false;
+        return itemBool.equals("true");
+    }
+
     public String getItemJavaType(String object, String element) {
         String key = new String();
         key = ".{.Models.{." + object + ".{.items.{.properties.{." + element + ".{.java";
@@ -90,17 +99,15 @@ public class ModelDefinitionTree {
         key = ".{.Models.{." + object + ".{.objectOfList";
         String objectOdList = modelTree.get(key);
         return objectOdList;
-        
-    }
 
+    }
 
     public String nextPrimaryKey(String object, int itemNum) {
         String key = new String();
         String value = null;
-        key = ".{.Models.{." + object + ".{.items.{.primaryKey.[.."+Integer.toString(itemNum);
+        key = ".{.Models.{." + object + ".{.items.{.primaryKey.[.." + Integer.toString(itemNum);
         return modelTree.get(key);
     }
-
 
     public String nextItem(String object, String item) {
         String key = new String();
@@ -108,11 +115,11 @@ public class ModelDefinitionTree {
         if (item == null || item.equals("")) {
             key = ".{.Models.{." + object + ".{.items.{.properties.{.";
         } else {
-            key = ".{.Models.{." + object + ".{.items.{.properties.{."+ item + "@";
+            key = ".{.Models.{." + object + ".{.items.{.properties.{." + item + "@";
         }
         String mask = ".{.Models.{." + object + ".{.items.{.properties.{.";
         key = modelTree.higherKey(key);
-        if (key.indexOf(mask)== 0) {
+        if (key.indexOf(mask) == 0) {
             // SR: i dalje je item na redu
             key = key.substring(mask.length());
             int point = key.indexOf('.');
@@ -122,20 +129,19 @@ public class ModelDefinitionTree {
             // next raw in map tree isn't item so it's end 
             return null;
         }
-
     }
 
-    public String nextObject(String object) { 
+    public String nextObject(String object) {
         String key = new String();
         String lObject = new String();
         if (object == null || object.equals("")) {
             key = ".{.Models.{.";
-        } else { 
+        } else {
             key = ".{.Models.{." + object + "@";
         }
         String mask = ".{.Models.{.";
         key = modelTree.higherKey(key);
-        if (key.indexOf(mask)== 0) {
+        if (key.indexOf(mask) == 0) {
             // SR: i dalje je item na redu
             key = key.substring(mask.length());
             int point = key.indexOf('.');
@@ -147,7 +153,73 @@ public class ModelDefinitionTree {
         }
 
     }
-    
+    public class PropertiesValidate {
+        String valueProperty;
+        boolean validate;
+        String action;
+        String errormessage;
+        String errorcode;
+        Integer show;
+        String property;
+
+        public PropertiesValidate(String property) {
+            // Default values
+            validate = true;
+            action = "error";
+            errormessage = "Unknown validate error";
+            errorcode = "VAL-000-500";
+            show = 3;
+            this.property = property;
+        }
+    }
+
+    public PropertiesValidate propertyValidate(String property, String object, String item) {
+        String keyProperty = ".{.Models.{." + object + ".{.items.{.properties.{." + item + ".{." + property;
+        String propertyValue = modelTree.get(keyProperty);
+        if (propertyValue == null) {
+            // length not defined
+            PropertiesValidate lval = new PropertiesValidate(property);
+            lval.validate = false;
+            lval.action = "";
+            lval.errormessage = "";
+            lval.errorcode = "";
+            lval.show = 0;
+            return lval;
+        } else {
+            PropertiesValidate lval = new PropertiesValidate(property);
+            lval.valueProperty = propertyValue;
+
+            String key = ".{.Models.{." + object + ".{.items.{.properties.{." + item + ".{." + property + "Validate.{.set.{.validate";
+            String value = modelTree.get(key);
+            if (value != null) {
+                lval.validate = Boolean.parseBoolean(value);
+            }
+            key = ".{.Models.{." + object + ".{.items.{.properties.{." + item + ".{." + property + "Validate.{.set.{.action";
+            value = modelTree.get(key);
+            if (value != null) {
+                lval.action = value;
+            }
+            key = ".{.Models.{." + object + ".{.items.{.properties.{." + item + ".{." + property + "Validate.{.set.{.errormessage";
+            value = modelTree.get(key);
+            if (value != null) {
+                lval.errormessage = value;
+                lval.errormessage = lval.errormessage.replace("${object}", object).replace(("${item}"), item)
+                        .replace("${property}", property);
+            }
+            key = ".{.Models.{." + object + ".{.items.{.properties.{." + item + ".{." + property + "Validate.{.set.{.errorcode";
+            value = modelTree.get(key);
+            if (value != null) {
+                lval.errorcode = value;
+            }
+            key = ".{.Models.{." + object + ".{.items.{.properties.{." + item + ".{." + property + "Validate.{.set.{.show";
+            value = modelTree.get(key);
+            if (value != null) {
+                lval.show = Integer.parseInt(value);
+            }
+            return lval;
+        }
+
+    }
 
 
 }

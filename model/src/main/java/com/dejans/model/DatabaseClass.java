@@ -8,7 +8,7 @@ public interface DatabaseClass {
     public Object get(String itemName);
     public Object getValueForPrimaryKey(String itemName);
     public boolean isChanged(String itemName);
-    public void set(String itemName, Object value);
+    public void set(String itemName, Object value)  throws Exception;;
     public void setStatus(String status);
 
 
