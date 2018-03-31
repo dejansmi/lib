@@ -1,6 +1,7 @@
 package com.dejans.ValidateAndException;
 
-com.dejans.ValidateAndException.ModelDefinitionTree;
+import com.dejans.model.ModelDefinitionTree;
+import com.dejans.model.ModelDefinitionTree.PropertiesValidate;
 
 public class ValidateByDefinition {
     private ModelDefinitionTree model = null;

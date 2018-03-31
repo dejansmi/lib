@@ -154,12 +154,12 @@ public class ModelDefinitionTree {
 
     }
     public class PropertiesValidate {
-        String valueProperty;
-        boolean validate;
-        String action;
-        String errormessage;
-        String errorcode;
-        Integer show;
+        public String valueProperty;
+        public boolean validate;
+        public String action;
+        public String errormessage;
+        public String errorcode;
+        public Integer show;
         String property;
 
         public PropertiesValidate(String property) {
