@@ -25,7 +25,8 @@ public class SetPortOfMicroservice {
         return object;
     }
 
-    public static void setPort(String clientName) {
+    //     pid - client process (OS) identficator 
+    public static void setPort(String clientName, long pid) {
         TreeMap<String, String> model;
         String uri = new String();
 
@@ -46,8 +47,6 @@ public class SetPortOfMicroservice {
 
         String port = new String();
         RestTemplate restTemplate = new RestTemplate();
-        long pid = java.lang.ProcessHandle.current().pid();
-        //long pid = 1002; 
         HttpUtils uriClass = new HttpUtils();
         try {
             uri = uriClass.setScheme(scheme).setHost(host).setPort(portEureka).setPath(pathPortSet)

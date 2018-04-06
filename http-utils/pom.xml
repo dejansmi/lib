@@ -70,8 +70,6 @@
 									<exclude>org.apache.maven:lib:tests</exclude>
 									<exclude>log4j:log4j:jar:</exclude>
 								</excludes>
-								<source>1.9</source>
-								<target>1.9</target>
 							</artifactSet>
 						</configuration>
 					</execution>
