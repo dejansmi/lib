@@ -42,7 +42,7 @@ public class TreeMapYamlParse {
         return treeMap;
     }
 
-    private String valueToken(String lKey, String lField, String lValue) {
+    private String valueToken(String lKey, String lField, String lValues) {
         String pomArr = new String();
         String pKey = new String();
         String lastOfKey = new String();
@@ -68,14 +68,14 @@ public class TreeMapYamlParse {
 
         if (lastOfKey.equals("x-domain")) {
             pKey = lastObjectArray(pKey, "{.x-domain");
-            lValue = "#/Domains/" + lValue + "/microservices";
-            findRefAndExtractOne(pKey, lValue);
+            lValues = "#/Domains/" + lValues + "/microservices";
+            findRefAndExtractOne(pKey, lValues);
         } else if (lastOfKey.equals("domain")) {
             pKey = lastObjectArray(pKey, "{.domain");
-            lValue = "#/Domains/" + lValue;
-            findRefAndExtractOne(pKey, lValue);
+            lValues = "#/Domains/" + lValues;
+            findRefAndExtractOne(pKey, lValues);
         } else {
-            treeMap.put(pKey, lValue);
+            treeMap.put(pKey, lValues);
         }
 
         if (lField != null) {

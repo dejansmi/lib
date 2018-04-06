@@ -8,8 +8,8 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.dejans</groupId>
-  <artifactId>model</artifactId>
-  <name>model</name>
+  <artifactId>http-utils</artifactId>
+  <name>http-utils</name>
   <version>0.0.1-SNAPSHOT</version>
   <description>Demo project for Spring Boot</description>
   <build>
@@ -55,13 +55,31 @@
           <artifactId>TestLib</artifactId>
           <version>0.0.1-SNAPSHOT</version>
           <packaging>jar</packaging>
-          <file>${basedir}/target/model-0.0.1-SNAPSHOT.jar</file>
+          <file>${basedir}/target/http-utils-0.0.1-SNAPSHOT.jar</file>
           <generatePom>true</generatePom>
         </configuration>
       </plugin>
     </plugins>
   </build>
   <dependencies>
+    <dependency>
+      <groupId>javax.json</groupId>
+      <artifactId>javax.json-api</artifactId>
+      <version>1.1.2</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.dejans</groupId>
+      <artifactId>model</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <version>2.0.0.RELEASE</version>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
@@ -76,7 +94,9 @@
     </dependency>
   </dependencies>
   <properties>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <java.version>1.9</java.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
