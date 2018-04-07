@@ -86,7 +86,7 @@ public class TreeMapYamlParse {
     }
 
     private void putItemsRequired(String key, String value, int ind) {
-        String keyL = key.substring(0,ind)+ ".{.items.{.properties.{." + value +".{.required";
+        String keyL = key.substring(0, ind) + ".{.items.{.properties.{." + value + ".{.required";
         treeMap.put(keyL, "true");
     }
 
@@ -143,6 +143,12 @@ public class TreeMapYamlParse {
 
     public TreeMapYamlParse(File fileName) throws IOException {
         YamlParserToTree(fileName);
+    }
+
+    public TreeMapYamlParse(File... fileNames) throws IOException {
+        for (File fileName : fileNames) {
+            YamlParserToTree(fileName);
+        }
     }
 
     public void addConfiguration(File fileName) throws IOException {

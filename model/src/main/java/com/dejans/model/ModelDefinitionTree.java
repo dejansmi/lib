@@ -153,6 +153,35 @@ public class ModelDefinitionTree {
         }
 
     }
+
+    public String nextElement(String element, String... fromElement) {
+        String key = new String();
+        String lItem = new String();
+        String mask = new String();
+        key = ".{.";
+        for (String elem : fromElement) {
+            key += elem;
+        }
+        key += ".{.";
+        mask = key;
+        if (!(element == null || element.equals(""))) {
+            key += element + "@";
+        }
+        key = modelTree.higherKey(key);
+        if (key.indexOf(mask) == 0) {
+            // SR: i dalje je item na redu
+            key = key.substring(mask.length());
+            int point = key.indexOf('.');
+            lItem = key.substring(0, point);
+            return lItem;
+        } else {
+            // next raw in map tree isn't item so it's end 
+            return null;
+        }
+
+    }
+
+
     public class PropertiesValidate {
         public String valueProperty;
         public boolean validate;
